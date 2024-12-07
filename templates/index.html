@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Prediction</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body style="background: url('/static/images/url1.png') no-repeat center center fixed; background-size: cover;">
+    <!-- Fixed Notification Bar Container -->
+    {% if result %}
+        <div class="notification-bar {{ result_class }}-bar">
+            <span class="close-btn" onclick="closeNotification()">×</span>
+            <p><span class="icon">{{ result_icon }}</span> {{ result_message }}</p>
+        </div>
+    {% endif %}
+
+    <!-- URL Prediction Form Container -->
+    <div class="url-prediction-container">
+        <h1>URL Prediction</h1>
+        <form id="url-form" action="/" method="POST">
+            <input type="text" name="url" placeholder="Enter a URL" required>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+            <p class="result {{ result_class }}-text">Prediction: {{ result }}</p>
+        {% endif %}
+    </div>
+
+<!-- Dynamic Phishing Text Container (only displayed if prediction is "phishing") -->
+{% if result == "phishing" %}
+    <div class="dynamic-phishing-container">
+        <p>
+            <ul class="phishing-details-list">
+                <li>Phishing is a cybercrime where attackers impersonate trusted organizations, like banks or companies, to steal sensitive information such as passwords, credit card details, or personal data.</li>
+                <li>They commonly send fake emails, messages, or create websites that closely resemble legitimate ones to deceive users into sharing their information.</li>
+                <li>Attackers use tactics like creating urgency, such as warnings about account suspension, or offering fake rewards to trick victims into acting quickly without thinking.</li>
+                <li>To spot phishing, always check for unusual email addresses, spelling errors, and mismatched or suspicious links. Hover over links to verify their authenticity before clicking.</li>
+                <li>Protect yourself by using strong passwords, enabling two-factor authentication, and keeping antivirus software updated. Never share personal information unless you’re certain the request is genuine.</li>
+                <li>Staying cautious and informed about phishing scams can help prevent identity theft, financial loss, and account compromise.</li>
+            </ul>
+        </p>
+    </div>
+
+{% elif result == "malware" %}
+    <!-- Benign Case Text Container -->
+    <div class="dynamic-malware-container">
+        <p>
+            <ul class="malware-details-list">
+                <li>Malware is malicious software designed to harm or exploit any device, service, or network. It can infect your device through email attachments, malicious websites, or downloads.</li>
+                <li>Common types of malware include viruses, worms, Trojans, ransomware, and spyware, each with different purposes but often aiming to steal sensitive data, disrupt operations, or demand ransom.</li>
+                <li>Malware can spread through infected emails, files, or links, and may be disguised as legitimate software or updates. Always be cautious when downloading files from unfamiliar sources.</li>
+                <li>To protect yourself from malware, avoid clicking on suspicious links, never download files from untrusted sources, and regularly update your antivirus software.</li>
+                <li>Regularly scan your devices for malware, ensure your operating system and applications are up to date, and enable firewalls to add an extra layer of protection.</li>
+                <li>Keeping your software and security measures updated is one of the best ways to prevent malware infections and safeguard your personal data and privacy.</li>
+            </ul>
+           </p>
+    </div>
+
+{% elif result == "defacement" %}
+    <!-- Defacement Case Text Container -->
+    <div class="dynamic-defacement-container">
+        <p>
+            <ul class="defacement">
+                <li>Website defacement occurs when an unauthorized user or attacker modifies the content of a website, usually to display their own message, image, or propaganda.</li>
+                <li>These attacks can often go unnoticed until users report strange or inappropriate content. Defaced websites may contain offensive material or misinformation, affecting the site's credibility and reputation.</li>
+                <li>Defacement can occur due to vulnerabilities in a website's security, such as outdated software, weak passwords, or inadequate protection against attacks. Attackers exploit these weaknesses to gain access and alter content.</li>
+                <li>To prevent website defacement, always maintain up-to-date security patches, use strong authentication methods, and regularly back up website data to ensure you can recover from attacks.</li>
+                <li>If you encounter a defaced website, avoid interacting with it. Inform the website administrators and avoid sharing personal or financial information until the issue is resolved.</li>
+                <li>Being aware of defacement tactics and taking preventive measures can help protect your website and its users from this type of cyber attack.</li>
+            </ul>
+           </p>
+    </div>
+{% endif %}
+
+    <script>
+        function closeNotification() {
+            const notification = document.querySelector('.notification-bar');
+            if (notification) notification.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
