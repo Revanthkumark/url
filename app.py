@@ -76,33 +76,27 @@ def home():
 
     if request.method == "POST":
         url_link = request.form.get("url", "")
-        
-        if not url_link:
-            result_message = "Please enter a valid URL."
-            result_class = "error"
-            result_icon = "❌"
-        else:
-            result = prediction_url(url_link)
+        result = prediction_url(url_link)
 
-            if result == 'benign':
-                result_class = "benign"
-                result_message = f"The {url_link} is a Good Website"
-                result_icon = "✅"
+        if result == 'benign':
+            result_class = "benign"
+            result_message = f"The {url_link} is a Good Website"
+            result_icon = "✅"
 
-            elif result == 'defacement':
-                result_class = "defacement"
-                result_message = f"The {url_link} is a Defacement Website"
-                result_icon = "⚠️"
+        elif result == 'defacement':
+            result_class = "defacement"
+            result_message = f"The {url_link} is a Defacement Website"
+            result_icon = "⚠️"
 
-            elif result == 'phishing':
-                result_class = "phishing"
-                result_message = f"The {url_link} is a Phishing Website"
-                result_icon = "🚨"
+        elif result == 'phishing':
+            result_class = "phishing"
+            result_message = f"The {url_link} is a Phishing Website"
+            result_icon = "🚨"
 
-            elif result == 'malware':
-                result_class = 'malware'
-                result_message = f"The {url_link} is a Malware Website"
-                result_icon = "🛑"
+        elif result == 'malware':
+            result_class = 'malware'
+            result_message = f"The {url_link} is a Malware Website"
+            result_icon = "🛑"
     
     return render_template("index.html", 
                            result=result, 
